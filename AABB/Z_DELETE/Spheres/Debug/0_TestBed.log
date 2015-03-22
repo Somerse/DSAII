@@ -1,0 +1,54 @@
+﻿Build started 3/22/2015 1:52:34 AM.
+     1>Project "C:\Users\Nathan\Desktop\New folder\0_TestBed\0_TestBed.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D DEBUG /D _MBCS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\\" /Fd"C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\vc110.pdb" /Gd /TP /wd4251 /analyze- /errorReport:prompt /D _CRT_SECURE_NO_WARNINGS BoundingBoxClass.cpp BoundingBoxManagerSingleton.cpp
+         BoundingBoxManagerSingleton.cpp
+         BoundingBoxClass.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Nathan\Desktop\New folder\Z_DELETE\SpheresD.exe" /INCREMENTAL /NOLOGO glew32.lib SOIL.lib opengl32.lib glu32.lib "sfml-system.lib" "sfml-window.lib" MyEngine_d.lib BulletCollision_Debug.lib BulletDynamics_Debug.lib LinearMath_Debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Nathan\Desktop\New folder\Z_DELETE\SpheresD.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Nathan\Desktop\New folder\Z_DELETE\SpheresD.lib" /MACHINE:X86 "C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\BTO.res"
+         "C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\Application.obj"
+         "C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\ApplicationClass.obj"
+         "C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\ApplicationControls.obj"
+         "C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\BoundingBoxClass.obj"
+         "C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\BoundingBoxManagerSingleton.obj"
+         "C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\BoundingSphereClass.obj"
+         "C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\BoundingSphereManagerSingleton.obj"
+         "C:\Users\Nathan\Desktop\New folder\Z_DELETE\Spheres\Debug\Main.obj"
+         0_TestBed.vcxproj -> C:\Users\Nathan\Desktop\New folder\Z_DELETE\SpheresD.exe
+       PostBuildEvent:
+         mkdir “C:\Users\Nathan\Desktop\New folder\_Binary\”
+         mkdir “C:\Users\Nathan\Desktop\New folder\_Binary\Shaders\”
+         copy “C:\Users\Nathan\Desktop\New folder\Z_DELETE\SpheresD.exe” “C:\Users\Nathan\Desktop\New folder\_Binary”
+         xcopy "C:\Users\Nathan\Desktop\New folder\include\GL\bin" "C:\Users\Nathan\Desktop\New folder\_Binary" /y
+         xcopy "C:\Users\Nathan\Desktop\New folder\include\ME\bin" "C:\Users\Nathan\Desktop\New folder\_Binary" /y
+         xcopy "C:\Users\Nathan\Desktop\New folder\include\ME\Shaders" "C:\Users\Nathan\Desktop\New folder\_Binary\Shaders" /y
+         :VCEnd
+         The filename, directory name, or volume label syntax is incorrect.
+         Error occurred while processing: “C:\Users\Nathan\Desktop\New.
+         A subdirectory or file folder\_Binary\” already exists.
+         Error occurred while processing: folder\_Binary\”.
+         The filename, directory name, or volume label syntax is incorrect.
+         Error occurred while processing: “C:\Users\Nathan\Desktop\New.
+         A subdirectory or file folder\_Binary\Shaders\” already exists.
+         Error occurred while processing: folder\_Binary\Shaders\”.
+         The syntax of the command is incorrect.
+         C:\Users\Nathan\Desktop\New folder\include\GL\bin\glew32.dll
+         1 File(s) copied
+         C:\Users\Nathan\Desktop\New folder\include\ME\bin\MyEngine.dll
+         C:\Users\Nathan\Desktop\New folder\include\ME\bin\MyEngine_d.dll
+         2 File(s) copied
+         C:\Users\Nathan\Desktop\New folder\include\ME\Shaders\Basic.fs
+         C:\Users\Nathan\Desktop\New folder\include\ME\Shaders\Basic.vs
+         C:\Users\Nathan\Desktop\New folder\include\ME\Shaders\Color.fs
+         C:\Users\Nathan\Desktop\New folder\include\ME\Shaders\Color.vs
+         C:\Users\Nathan\Desktop\New folder\include\ME\Shaders\MEShader.fs
+         C:\Users\Nathan\Desktop\New folder\include\ME\Shaders\MEShader.vs
+         C:\Users\Nathan\Desktop\New folder\include\ME\Shaders\MEShaderBW.fs
+         C:\Users\Nathan\Desktop\New folder\include\ME\Shaders\MEShaderInv.fs
+         8 File(s) copied
+     1>Done Building Project "C:\Users\Nathan\Desktop\New folder\0_TestBed\0_TestBed.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:07.17
