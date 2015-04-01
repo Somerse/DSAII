@@ -1,4 +1,5 @@
 #include "ApplicationClass.h"
+
 void ApplicationClass::InitAppVariables()
 {
 	float fSteve = 0.0f;
@@ -45,7 +46,7 @@ void ApplicationClass::GenerateBoundingSphere(matrix4 a_mModelToWorld, String a_
 					v3Min.x = lVertices[nVertex].x;
 				else if(v3Max.x < lVertices[nVertex].x)
 					v3Max.x = lVertices[nVertex].x;
-			
+
 				if(v3Min.y > lVertices[nVertex].y)
 					v3Min.y = lVertices[nVertex].y;
 				else if(v3Max.y < lVertices[nVertex].y)
@@ -83,16 +84,65 @@ void ApplicationClass::Update (void)
 	static float fRunTime = 0.0f;
 
 	fRunTime += fTimeSpan; //update the run time count
-	matrix4 m4Steve = glm::rotate(matrix4(IDENTITY), fRunTime * 15, vector3( 0.0f,-1.0f, 0.0f));
-	matrix4 m4Zombie = glm::translate(vector3(-6.0f, 0.0f, 0.0f));
-	matrix4 m4Cow = glm::translate(vector3(-3.0f, 0.0f, 0.0f));
-	matrix4 m4Pig = glm::translate(vector3(6.0f, 0.0f, 0.0f));
-	
+
+	matrix4 m4Steve;
+	matrix4 m4Zombie;
+	matrix4 m4Cow;
+	matrix4 m4Pig;
+
+	//Move Steve if it is collided and stop Steve's rotation
+	if(m_pBBMngr->name1 == "Steve" || m_pBBMngr->name2 == "Steve"){
+		m4Steve = glm::translate(vector3(0.0f, -3.0f, 0.0f));
+	} 
+	//else Stay in Position and keep rotating
+	else {
+		m4Steve = glm::rotate(matrix4(IDENTITY), fRunTime * 15, vector3( 0.0f,-1.0f, 0.0f));
+	}
+
+	//Move Zombie if it is collided
+	if(m_pBBMngr->name1 == "Zombie" || m_pBBMngr->name2 == "Zombie"){
+		m4Zombie = glm::translate(vector3(0.0f, -3.0f, 0.0f));
+	} 
+	//else Stay in Position
+	else {
+		m4Zombie = glm::translate(vector3(-6.0f, 0.0f, 0.0f));
+	}
+
+	//Move Cow if it is collided
+	if(m_pBBMngr->name1 == "Cow" || m_pBBMngr->name2 == "Cow"){
+		m4Cow = glm::translate(vector3(0.0f, -3.0f, 0.0f));
+	} 
+	//else Stay in Position
+	else {
+		m4Cow = glm::translate(vector3(0.0f, 0.0f, 0.0f));
+	}
+
+	//Move Pig if it is collided
+	if(m_pBBMngr->name1 == "Pig" || m_pBBMngr->name2 == "Pig"){
+		m4Pig = glm::translate(vector3(0.0f, -3.0f, 0.0f));
+	} 
+	//else Stay in Position
+	else {
+		m4Pig = glm::translate(vector3(6.0f, 0.0f, 0.0f));
+	}
+
 	m_pMeshMngr->SetModelMatrix(m4Steve, "Steve");
 	m_pMeshMngr->SetModelMatrix(m_m4Creeper, "Creeper");
 	m_pMeshMngr->SetModelMatrix(m4Pig, "Pig");
 	m_pMeshMngr->SetModelMatrix(m4Zombie, "Zombie");
 	m_pMeshMngr->SetModelMatrix(m4Cow, "Cow");
+
+	/*
+	static unsigned char firstRun = 0;
+	if(!firstRun)
+	{
+		m_pMeshMngr->SetModelMatrix(m_m4Creeper, "Creeper");
+		m_pMeshMngr->SetModelMatrix(m4Pig, "Pig");
+		m_pMeshMngr->SetModelMatrix(m4Zombie, "Zombie");
+		m_pMeshMngr->SetModelMatrix(m4Cow, "Cow");
+		firstRun = 1;
+	}*/
+
 
 #pragma region Method
 	//GenerateBoundingSphere(mA,"A");
@@ -101,13 +151,13 @@ void ApplicationClass::Update (void)
 #pragma region Bounding Sphere Class
 	//pBoundingSphere1->GenerateBoundingSphere("Steve");
 	//pBoundingSphere2->GenerateBoundingSphere("Creeper");
-	
+
 	//pBoundingSphere1->AddSphereToRenderList(m4Steve, MEYELLOW, true);
 	//pBoundingSphere2->AddSphereToRenderList(m_m4Creeper, MEYELLOW, true);
 #pragma endregion
 
 	/*
-#pragma region Bounding Sphere Manager
+	#pragma region Bounding Sphere Manager
 	m_pBSMngr->GenerateBoundingSphere("Steve");
 	m_pBSMngr->GenerateBoundingSphere("Creeper");
 	m_pBSMngr->GenerateBoundingSphere("Cow");
@@ -123,7 +173,7 @@ void ApplicationClass::Update (void)
 	m_pBSMngr->CalculateCollision();
 
 	m_pBSMngr->AddSphereToRenderList("ALL");
-#pragma endregion
+	#pragma endregion
 	*/
 #pragma region Bounding Box Manager
 	m_pBBMngr->GenerateBoundingBox("Steve");
@@ -135,8 +185,8 @@ void ApplicationClass::Update (void)
 	m_pBBMngr->SetBoundingBoxSpace(m4Steve, "Steve");
 	m_pBBMngr->SetBoundingBoxSpace(m_m4Creeper, "Creeper");
 	m_pBBMngr->SetBoundingBoxSpace(m4Cow, "Cow");
-	m_pBBMngr->SetBoundingBoxSpace(m4Pig, "Pig");
 	m_pBBMngr->SetBoundingBoxSpace(m4Zombie, "Zombie");
+	m_pBBMngr->SetBoundingBoxSpace(m4Pig, "Pig");
 
 	m_pBBMngr->CalculateCollision();
 
@@ -144,7 +194,7 @@ void ApplicationClass::Update (void)
 #pragma endregion
 
 	m_pMeshMngr->AddInstanceToRenderList();
-	
+
 	//First person camera movement
 	if(m_bFPC == true)
 		CameraRotation();

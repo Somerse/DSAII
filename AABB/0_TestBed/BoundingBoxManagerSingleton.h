@@ -13,6 +13,8 @@ class BoundingBoxManagerSingleton
 	static BoundingBoxManagerSingleton* m_pInstance; // Singleton pointer
 	
 public:
+	String name1;
+	String name2;
 	/* Gets/Constructs the singleton pointer */
 	static BoundingBoxManagerSingleton* GetInstance();
 	/* Destroys the singleton */

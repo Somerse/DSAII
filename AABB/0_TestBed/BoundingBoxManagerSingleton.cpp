@@ -1,7 +1,10 @@
 #include "BoundingBoxManagerSingleton.h"
+#include "ApplicationClass.h"
+
 
 //  BoundingBoxManagerSingleton
 BoundingBoxManagerSingleton* BoundingBoxManagerSingleton::m_pInstance = nullptr;
+
 void BoundingBoxManagerSingleton::Init(void)
 {
 	m_nBoxs = 0;
@@ -136,8 +139,78 @@ void BoundingBoxManagerSingleton::CalculateCollision(void)
 			if(i != j)
 			{
 				//If the distance between the center of both Boxs is less than the sum of their radius there is a collision
-				if(glm::distance(lCentroid[i].x, lCentroid[j].x) < (m_lBox[i]->GetWidth() / 2 + m_lBox[j]->GetWidth() / 2) && glm::distance(lCentroid[i].y, lCentroid[j].y) < (m_lBox[i]->GetHeight() / 2 + m_lBox[j]->GetHeight() / 2) && glm::distance(lCentroid[i].z, lCentroid[j].z) < (m_lBox[i]->GetLength() / 2 + m_lBox[j]->GetLength() / 2))
-					m_lColor[i] = m_lColor[j] = MERED; //We make the Boxs red
+				if(glm::distance(lCentroid[i].x, lCentroid[j].x) < (m_lBox[i]->GetWidth() / 2 + m_lBox[j]->GetWidth() / 2) && glm::distance(lCentroid[i].y, lCentroid[j].y) < (m_lBox[i]->GetHeight() / 2 + m_lBox[j]->GetHeight() / 2) && glm::distance(lCentroid[i].z, lCentroid[j].z) < (m_lBox[i]->GetLength() / 2 + m_lBox[j]->GetLength() / 2)){
+					
+					//Make colliding boxes red
+					m_lColor[i] = m_lColor[j] = MERED;
+
+					//Move collided boxes to the bottom center
+					m_lMatrix[i] = glm::translate(vector3(0.0f, -3.0f, 0.0f));
+					m_lMatrix[j] = glm::translate(vector3(0.0f, -3.0f, 0.0f));
+
+					//Figure out which model that is in m_lMatrix[i] is colliding
+					switch(i)
+					{
+					   case 0:
+						   name1 = "Steve";
+						   break;
+					   case 1:
+						   name1 = "Creeper";
+						   break;
+					   case 2:
+						   name1 = "Cow";
+						   break;
+					   case 3:
+						   name1 = "Zombie";
+						   break;
+						case 4:
+						   name1 = "Pig";
+						   break;
+					}
+
+					//Figure out which model that is in m_lMatrix[j] is colliding
+					switch(j)
+					{
+					   case 0:
+						   name2 = "Steve";
+						   break;
+					   case 1:
+						   name2 = "Creeper";
+						   break;
+					   case 2:
+						   name2 = "Cow";
+						   break;
+					   case 3:
+						   name2 = "Zombie";
+						   break;
+						case 4:
+						   name2 = "Pig";
+						   break;
+					}
+
+					//std::cout << "Name 1: " << name1 << std::endl;
+					//std::cout << "Name 2: " << name2 << std::endl;
+
+					//Attempting to get the models based off the collided bounding boxes to move them to the new location (bottom center)
+					
+					/*
+					MeshManagerSingleton* m_pMeshMngr = MeshManagerSingleton::GetInstance();		
+					String name1 = "Creeper";
+					String name2;
+					
+					switch(i)
+					{
+					   case 0:
+						   name1 = "Creeper";
+						   break;
+					}
+					
+
+					matrix4 modelMatrix = m_pMeshMngr->GetModelMatrix(name1);
+					matrix4 translation = glm::translate(vector3(0.0f, -3.0f, 0.0f));
+					m_pMeshMngr->SetModelMatrix(translation * modelMatrix, name1);
+					*/
+				}
 			}
 		}
 	}
