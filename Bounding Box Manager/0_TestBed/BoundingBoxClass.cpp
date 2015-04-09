@@ -107,7 +107,7 @@ void BoundingBoxClass::GenerateAxisAlignedBoundingBox(matrix4 a_m4ModeltoWorld)
 	//Translates each of the 8 corner vertices into world space
 	for (int i = 0; i < vertices.size(); i++)
 	{
-		vertices[i] = (vector3)(a_m4ModeltoWorld * vector4(vertices[i].x, vertices[i].y, vertices[i].z, 1));
+		vertices[i] = static_cast<vector3>(glm::mat3(a_m4ModeltoWorld) * vertices[i]);
 	}
 
 	vector3 min, max = vertices[0];
@@ -145,15 +145,19 @@ void BoundingBoxClass::GenerateAxisAlignedBoundingBox(matrix4 a_m4ModeltoWorld)
 	}
 
 	//Uses the found min and max vertices to find the model's midpoint
-	centroid = vector3 ((min.x + max.x) / 2.0f, (min.y + max.y) / 2.0f, (min.z + max.z) / 2.0f);
+	centroid = (min + max) / 2.0f;
 
 	//Uses the found min and max vertices to determine the model's scale
 	scale = vector3(max.x - min.x, max.y - min.y, max.z - min.z);
+	
+	//Translates everything to the correct location in world space
+	matrix4 transMatrix = glm::mat4(1.0f);
+	transMatrix[3] = a_m4ModeltoWorld[3];
 
 	//Adds an axis and cube to queue that are both rendered based on the information we just found
 	MeshManagerSingleton* pMeshMngr = MeshManagerSingleton::GetInstance();
-	pMeshMngr->AddAxisToQueue(a_m4ModeltoWorld * glm::translate(centroid));
-	pMeshMngr->AddCubeToQueue(a_m4ModeltoWorld * glm::translate(centroid) * glm::scale(scale), vector3(0, 1.0f, 0), MERENDER::WIRE);
+	pMeshMngr->AddAxisToQueue(transMatrix * glm::translate(centroid));
+	pMeshMngr->AddCubeToQueue(transMatrix * glm::translate(centroid) * glm::scale(scale), vector3(0, 1.0f, 0), MERENDER::WIRE);
 }
 void BoundingBoxClass::AddBoxToRenderList(matrix4 a_m4ModelToWorld, vector3 a_vColor, bool a_bRenderCentroid)
 {
