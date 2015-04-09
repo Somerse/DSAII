@@ -1,0 +1,20 @@
+﻿Build started 4/8/2015 6:00:13 PM.
+     1>Project "C:\Users\Nathan\Desktop\DSAII\homework_9\0_TestBed\0_TestBed.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D DEBUG /D _MBCS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Users\Nathan\Desktop\DSAII\homework_9\Z_DELETE\A9 - Bounding Box\Debug\\" /Fd"C:\Users\Nathan\Desktop\DSAII\homework_9\Z_DELETE\A9 - Bounding Box\Debug\vc110.pdb" /Gd /TP /wd4251 /analyze- /errorReport:prompt /D _CRT_SECURE_NO_WARNINGS Application.cpp ApplicationClass.cpp ApplicationControls.cpp BoundingBoxClass.cpp BoundingBoxManagerSingleton.cpp Main.cpp
+         Main.cpp
+         BoundingBoxManagerSingleton.cpp
+         BoundingBoxClass.cpp
+     1>BoundingBoxClass.cpp(110): error C2059: syntax error : '}'
+     1>BoundingBoxClass.cpp(110): error C2143: syntax error : missing ';' before '}'
+     1>BoundingBoxClass.cpp(112): error C2143: syntax error : missing ';' before '{'
+     1>BoundingBoxClass.cpp(112): error C2447: '{' : missing function header (old-style formal list?)
+         ApplicationControls.cpp
+         ApplicationClass.cpp
+         Application.cpp
+         Generating Code...
+     1>Done Building Project "C:\Users\Nathan\Desktop\DSAII\homework_9\0_TestBed\0_TestBed.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:18.50
