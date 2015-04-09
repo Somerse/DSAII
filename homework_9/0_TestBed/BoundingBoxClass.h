@@ -18,6 +18,11 @@ class BoundingBoxClass
 	String m_sName;//Name of the BoundingBox (to relate to the instance)
 
 public:
+	//Accessible Vector3s used for Axis Aligned Bounding Box
+	vector3 n_Size;
+	vector3 n_Center;
+	vector3 n_Color;
+
 	/* Constructor */
 	BoundingBoxClass(void);
 	/* Copy Constructor */
@@ -77,6 +82,7 @@ public:
 		Adds the sphere to the render list specifying also if rendering the centroid is necessary
 	*/
 	void AddBoxToRenderList(matrix4 a_mModelToWorld, vector3 a_vColor, bool a_bRenderCentroid = false);
+
 
 	
 private:

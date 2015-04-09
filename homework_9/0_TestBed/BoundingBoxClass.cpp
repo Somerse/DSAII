@@ -94,20 +94,78 @@ void BoundingBoxClass::GenerateOrientedBoundingBox(String a_sInstanceName)
 }
 void BoundingBoxClass::GenerateAxisAlignedBoundingBox(matrix4 a_m4ModeltoWorld)
 {
-		/*
-		MeshManagerSingleton* pMeshMngr = MeshManagerSingleton::GetInstance();
+	//Generate the Axis Aligned Bounding Box here based on the Oriented Bounding Box
+
+	/*
+	std::vector<vector3> lVertices = pMeshMngr->GetVertices(m_sName);
+	unsigned int nVertices = lVertices.size();
+	m_v3Centroid = lVertices[0];
+	m_v3Max = lVertices[0];
+	m_v3Min = lVertices[0];*/
+
+	vector3 n_MaxOBB = this->GetMaximumOBB(); 
+	vector3 n_MinOBB = this->GetMinimumOBB();
+	vector3 n_Centroid = (n_MaxOBB + n_MinOBB) / 2.0f;
+	vector3 n_Half = n_MaxOBB - n_Centroid;
+	vector3 n_Max;
+	vector3 n_Min;
+
+
 	
-		std::vector<vector3> lVertices = pMeshMngr->GetVertices(a_m4ModeltoWorld);
-		vector3 AABB = (a_m4ModeltoWorld[0] * vector3(m_v3Size.x, m_v3Size.y, m_v3Size.z));
-		*/
+	//Sideways Rotation of Bounding Box generates these points:
+	//n_max.x, n_max.y
+	//n_min.x, n_min.y
+	//n_max.x, n_min.y
+	//n_min.x, n_max.y
 
+	//matrix4 turned into a matrix3
+	//mat3 = (m_lMatrix[index] * vec3);
+	glm::mat3 threePoints = glm::mat3(a_m4ModeltoWorld);
 
-		m_bInitialized = true;
+	
+	//Loop through x, y, and z points
+	for(int x = -1; x < 2; x += 2) {
+		for(int y = -1; y < 2; y += 2) {
+			for(int z = -1; z < 2; z += 2) {
+				vector3 newPoint;
+				newPoint.x = x * n_Half.x;
+				newPoint.y = y * n_Half.y;
+				newPoint.z = z * n_Half.z;
+				newPoint += n_Centroid;
+				newPoint = threePoints * newPoint;
+				n_Max = glm::max(n_Max, newPoint);
+				n_Min = glm::min(n_Min, newPoint);
+			}
+		}
 	}
 
+	//m_v3Centroid = (m_v3Min + m_v3Max) / 2.0f;
 
+	n_Center = (n_Min + n_Max) / 2.0f;
+
+	
+	/*m_v3Size.x = glm::distance(vector3(m_v3Min.x, 0.0f, 0.0f), vector3(m_v3Max.x, 0.0f, 0.0f));
+	m_v3Size.y = glm::distance(vector3(0.0f, m_v3Min.y, 0.0f), vector3(0.0f, m_v3Max.y, 0.0f));
+	m_v3Size.z = glm::distance(vector3(0.0f, 0.0f, m_v3Min.z), vector3(0.0f, 0.0f, m_v3Max.z));*/
+
+	n_Size.x = glm::distance(vector3(n_Min.x, 0.0f, 0.0f), vector3(n_Max.x, 0.0f, 0.0f));
+	n_Size.y = glm::distance(vector3(0.0f, n_Min.y, 0.0f), vector3(0.0f, n_Max.y, 0.0f));
+	n_Size.z = glm::distance(vector3(0.0f, 0.0f, n_Min.z), vector3(0.0f, 0.0f, n_Max.z));
+
+	glm::mat4 n_Translation = glm::mat4(1.0f);
+	n_Translation[3] = a_m4ModeltoWorld[3];
+
+	/*MeshManagerSingleton* pMeshMngr = MeshManagerSingleton::GetInstance();
+	pMeshMngr->AddAxisToQueue(a_m4ModelToWorld * glm::translate(m_v3Centroid));
+	pMeshMngr->AddCubeToQueue(a_m4ModelToWorld * glm::translate(m_v3Centroid) * glm::scale(m_v3Size), a_vColor, MERENDER::WIRE);*/
+
+	
+	MeshManagerSingleton* pMeshMngr = MeshManagerSingleton::GetInstance();
+	pMeshMngr->AddAxisToQueue(n_Translation * glm::translate(n_Center));
+	pMeshMngr->AddCubeToQueue(n_Translation * glm::translate(n_Center) * glm::scale(n_Size), n_Color, MERENDER::WIRE);
 
 }
+
 void BoundingBoxClass::AddBoxToRenderList(matrix4 a_m4ModelToWorld, vector3 a_vColor, bool a_bRenderCentroid)
 {
 	if(!m_bInitialized)
