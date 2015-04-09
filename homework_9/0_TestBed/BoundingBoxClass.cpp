@@ -124,13 +124,16 @@ void BoundingBoxClass::GenerateAxisAlignedBoundingBox(matrix4 a_m4ModeltoWorld)
 
 	
 	//Loop through x, y, and z points
-	for(int x = -1; x < 2; x += 2) {
-		for(int y = -1; y < 2; y += 2) {
-			for(int z = -1; z < 2; z += 2) {
+	for(int i = -1; i < 2; i += 2) 
+	{
+		for(int j = -1; j < 2; j += 2) 
+		{
+			for(int k = -1; k < 2; k += 2) 
+			{
 				vector3 newPoint;
-				newPoint.x = x * n_Half.x;
-				newPoint.y = y * n_Half.y;
-				newPoint.z = z * n_Half.z;
+				newPoint.x = i * n_Half.x;
+				newPoint.y = j * n_Half.y;
+				newPoint.z = k * n_Half.z;
 				newPoint += n_Centroid;
 				newPoint = threePoints * newPoint;
 				n_Max = glm::max(n_Max, newPoint);
