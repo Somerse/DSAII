@@ -1,0 +1,46 @@
+﻿Build started 4/8/2015 5:52:46 PM.
+     1>Project "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\0_TestBed\0_TestBed.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D DEBUG /D _MBCS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding Box\Debug\\" /Fd"C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding Box\Debug\vc110.pdb" /Gd /TP /wd4251 /analyze- /errorReport:prompt /D _CRT_SECURE_NO_WARNINGS BoundingBoxClass.cpp
+         BoundingBoxClass.cpp
+     1>BoundingBoxClass.cpp(108): warning C4018: '<' : signed/unsigned mismatch
+     1>BoundingBoxClass.cpp(118): warning C4018: '<' : signed/unsigned mismatch
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding BoxD.exe" /INCREMENTAL /NOLOGO glew32.lib SOIL.lib opengl32.lib glu32.lib "sfml-system.lib" "sfml-window.lib" MyEngine_d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding BoxD.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding BoxD.lib" /MACHINE:X86 "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding Box\Debug\BTO.res"
+         "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding Box\Debug\Application.obj"
+         "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding Box\Debug\ApplicationClass.obj"
+         "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding Box\Debug\ApplicationControls.obj"
+         "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding Box\Debug\BoundingBoxClass.obj"
+         "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding Box\Debug\BoundingBoxManagerSingleton.obj"
+         "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding Box\Debug\Main.obj"
+         0_TestBed.vcxproj -> C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding BoxD.exe
+       PostBuildEvent:
+         mkdir “C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\_Binary\”
+         mkdir “C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\_Binary\Shaders\”
+         copy “C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\Z_DELETE\A9 - Bounding BoxD.exe” “C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\_Binary”
+         xcopy "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\GL\bin" "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\_Binary" /y
+         xcopy "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\bin" "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\_Binary" /y
+         xcopy "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\Shaders" "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\_Binary\Shaders" /y
+         :VCEnd
+         A subdirectory or file C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\_Binary\ already exists.
+         A subdirectory or file C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\_Binary\Shaders\ already exists.
+                 1 file(s) copied.
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\GL\bin\glew32.dll
+         1 File(s) copied
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\bin\MyEngine.dll
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\bin\MyEngine_d.dll
+         2 File(s) copied
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\Shaders\Basic.fs
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\Shaders\Basic.vs
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\Shaders\Color.fs
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\Shaders\Color.vs
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\Shaders\MEShader.fs
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\Shaders\MEShader.vs
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\Shaders\MEShaderBW.fs
+         C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\include\ME\Shaders\MEShaderInv.fs
+         8 File(s) copied
+     1>Done Building Project "C:\Users\Nathan\Desktop\A9 - Bounding Box Manager\0_TestBed\0_TestBed.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.03
