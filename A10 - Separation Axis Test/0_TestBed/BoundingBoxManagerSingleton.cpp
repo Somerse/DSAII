@@ -157,7 +157,7 @@ void BoundingBoxManagerSingleton::CalculateCollision(void)
 			else if(v1Max.z < v2Min.z || v1Min.z > v2Max.z)
 				bColliding = false;
 
-			if(TestOBBOBB(i, j) == 0)
+			if(TestOBBOBB(i, j) == 1)
 				m_lColor[i] = m_lColor[j] = MERED; //We make the Boxes red
 		}
 	}
