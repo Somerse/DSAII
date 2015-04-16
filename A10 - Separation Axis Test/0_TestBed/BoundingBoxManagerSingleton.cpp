@@ -167,19 +167,34 @@ int BoundingBoxManagerSingleton::TestOBBOBB(int index1, int index2)
 {
 	BoundingBoxClass *a = m_lBox[index1];
 	BoundingBoxClass *b = m_lBox[index2];
-    
+  
+
+	//Vector u[3]; Local x-, y-, and z-axes
+	a->u[0] = vector4(m_lMatrix[index1] * vector4(1.0, 0.0, 0.0, 0.0));
+	a->u[1] = vector4(m_lMatrix[index1] * vector4(0.0, 1.0, 0.0, 0.0));
+	a->u[2] = vector4(m_lMatrix[index1] * vector4(0.0, 0.0, 1.0, 0.0));
+
+	//Vector u[3]; Local x-, y-, and z-axes
+	b->u[0] = vector4(m_lMatrix[index2] * vector4(1.0, 0.0, 0.0, 0.0));
+	b->u[1] = vector4(m_lMatrix[index2] * vector4(0.0, 1.0, 0.0, 0.0));
+	b->u[2] = vector4(m_lMatrix[index2] * vector4(0.0, 0.0, 1.0, 0.0));
+
+	//Vector e; Positive halfwidth extents of OBB along each axis
+	vector3 eA = a->m_v3Size / 2.0f;
+	vector3 eB = b->m_v3Size / 2.0f;
+
 	float ra, rb;
     glm::mat3x3 R, AbsR;
 
     // Compute rotation matrix expressing b in a's coordinate frame
     for (int i = 0; i < 3; i++)
        for (int j = 0; j < 3; j++)
-		   R[i][j] = glm::dot(a->GetMinimumOBB()[i], b->GetMinimumOBB()[j]);
+		   R[i][j] = glm::dot(a->u[i], b->u[j]);
 
     // Compute translation vector t
-    vector3 t = b->GetCentroid() - a->GetCentroid();
+    vector4 t = m_lMatrix[index2] * vector4(b->GetCentroid(), 1.0f) - m_lMatrix[index1] * vector4(a->GetCentroid(), 1.0f);
     // Bring translation into a's coordinate frame
-    t = vector3(glm::dot(t, a->GetMinimumOBB()), glm::dot(t, a->GetMinimumOBB()), glm::dot(t, a->GetMinimumOBB()));
+    t = vector4(glm::dot(t, a->u[0]), glm::dot(t, a->u[1]), glm::dot(t, a->u[2]), 1.0f);
 
     // Compute common subexpressions. Add in an epsilon term to
     // counteract arithmetic errors when two edges are parallel and
@@ -190,62 +205,62 @@ int BoundingBoxManagerSingleton::TestOBBOBB(int index1, int index2)
 
     // Test axes L = A0, L = A1, L = A2
     for (int i = 0; i < 3; i++) {
-        ra = a->GetMaximumOBB()[i];
-        rb = b->GetMaximumOBB()[0] * AbsR[i][0] + b->GetMaximumOBB()[1] * AbsR[i][1] + b->GetMaximumOBB()[2] * AbsR[i][2];
+        ra = eA[i];
+        rb = eB[0] * AbsR[i][0] + eB[1] * AbsR[i][1] + eB[2] * AbsR[i][2];
         if (glm::abs(t[i]) > ra + rb) return 0;
     }
 
     // Test axes L = B0, L = B1, L = B2
     for (int i = 0; i < 3; i++) {
-        ra = a->GetMaximumOBB()[0] * AbsR[0][i] + a->GetMaximumOBB()[1] * AbsR[1][i] + a->GetMaximumOBB()[2] * AbsR[2][i];
-        rb = b->GetMaximumOBB()[i];
+        ra = eA[0] * AbsR[0][i] + eA[1] * AbsR[1][i] + eA[2] * AbsR[2][i];
+        rb = eB[i];
         if (glm::abs(t[0] * R[0][i] + t[1] * R[1][i] + t[2] * R[2][i]) > ra + rb) return 0;
     }
 
     // Test axis L = A0 x B0
-    ra = a->GetMaximumOBB()[1] * AbsR[2][0] + a->GetMaximumOBB()[2] * AbsR[1][0];
-    rb = b->GetMaximumOBB()[1] * AbsR[0][2] + b->GetMaximumOBB()[2] * AbsR[0][1];
+    ra = eA[1] * AbsR[2][0] + eA[2] * AbsR[1][0];
+    rb = eB[1] * AbsR[0][2] + eB[2] * AbsR[0][1];
     if (glm::abs(t[2] * R[1][0] - t[1] * R[2][0]) > ra + rb) return 0;
 
     // Test axis L = A0 x B1
-    ra = a->GetMaximumOBB()[1] * AbsR[2][1] + a->GetMaximumOBB()[2] * AbsR[1][1];
-    rb = b->GetMaximumOBB()[0] * AbsR[0][2] + b->GetMaximumOBB()[2] * AbsR[0][0];
+    ra = eA[1] * AbsR[2][1] + eA[2] * AbsR[1][1];
+    rb = eB[0] * AbsR[0][2] + eB[2] * AbsR[0][0];
     if (glm::abs(t[2] * R[1][1] - t[1] * R[2][1]) > ra + rb) return 0;
 
     // Test axis L = A0 x B2
-    ra = a->GetMaximumOBB()[1] * AbsR[2][2] + a->GetMaximumOBB()[2] * AbsR[1][2];
-    rb = b->GetMaximumOBB()[0] * AbsR[0][1] + b->GetMaximumOBB()[1] * AbsR[0][0];
+    ra = eA[1] * AbsR[2][2] + eA[2] * AbsR[1][2];
+    rb = eB[0] * AbsR[0][1] + eB[1] * AbsR[0][0];
     if (glm::abs(t[2] * R[1][2] - t[1] * R[2][2]) > ra + rb) return 0;
 
     // Test axis L = A1 x B0
-    ra = a->GetMaximumOBB()[0] * AbsR[2][0] + a->GetMaximumOBB()[2] * AbsR[0][0];
-    rb = b->GetMaximumOBB()[1] * AbsR[1][2] + b->GetMaximumOBB()[2] * AbsR[1][1];
+    ra = eA[0] * AbsR[2][0] + eA[2] * AbsR[0][0];
+    rb = eB[1] * AbsR[1][2] + eB[2] * AbsR[1][1];
 
     if (glm::abs(t[0] * R[2][0] - t[2] * R[0][0]) > ra + rb) return 0;
 
     // Test axis L = A1 x B1
-    ra = a->GetMaximumOBB()[0] * AbsR[2][1] + a->GetMaximumOBB()[2] * AbsR[0][1];
-    rb = b->GetMaximumOBB()[0] * AbsR[1][2] + b->GetMaximumOBB()[2] * AbsR[1][0];
+    ra = eA[0] * AbsR[2][1] + eA[2] * AbsR[0][1];
+    rb = eB[0] * AbsR[1][2] + eB[2] * AbsR[1][0];
     if (glm::abs(t[0] * R[2][1] - t[2] * R[0][1]) > ra + rb) return 0;
 
     // Test axis L = A1 x B2
-    ra = a->GetMaximumOBB()[0] * AbsR[2][2] + a->GetMaximumOBB()[2] * AbsR[0][2];
-    rb = b->GetMaximumOBB()[0] * AbsR[1][1] + b->GetMaximumOBB()[1] * AbsR[1][0];
+    ra = eA[0] * AbsR[2][2] + eA[2] * AbsR[0][2];
+    rb = eB[0] * AbsR[1][1] + eB[1] * AbsR[1][0];
     if (glm::abs(t[0] * R[2][2] - t[2] * R[0][2]) > ra + rb) return 0;
 
     // Test axis L = A2 x B0
-    ra = a->GetMaximumOBB()[0] * AbsR[1][0] + a->GetMaximumOBB()[1] * AbsR[0][0];
-    rb = b->GetMaximumOBB()[1] * AbsR[2][2] + b->GetMaximumOBB()[2] * AbsR[2][1];
+    ra = eA[0] * AbsR[1][0] + eA[1] * AbsR[0][0];
+    rb = eB[1] * AbsR[2][2] + eB[2] * AbsR[2][1];
     if (glm::abs(t[1] * R[0][0] - t[0] * R[1][0]) > ra + rb) return 0;
 
     // Test axis L = A2 x B1
-    ra = a->GetMaximumOBB()[0] * AbsR[1][1] + a->GetMaximumOBB()[1] * AbsR[0][1];
-    rb = b->GetMaximumOBB()[0] * AbsR[2][2] + b->GetMaximumOBB()[2] * AbsR[2][0];
+    ra = eA[0] * AbsR[1][1] + eA[1] * AbsR[0][1];
+    rb = eB[0] * AbsR[2][2] + eB[2] * AbsR[2][0];
     if (glm::abs(t[1] * R[0][1] - t[0] * R[1][1]) > ra + rb) return 0;
 
     // Test axis L = A2 x B2
-    ra = a->GetMaximumOBB()[0] * AbsR[1][2] + a->GetMaximumOBB()[1] * AbsR[0][2];
-    rb = b->GetMaximumOBB()[0] * AbsR[2][1] + b->GetMaximumOBB()[1] * AbsR[2][0];
+    ra = eA[0] * AbsR[1][2] + eA[1] * AbsR[0][2];
+    rb = eB[0] * AbsR[2][1] + eB[1] * AbsR[2][0];
     if (glm::abs(t[1] * R[0][2] - t[0] * R[1][2]) > ra + rb) return 0;
 
     // Since no separating axis is found, the OBBs must be intersecting
